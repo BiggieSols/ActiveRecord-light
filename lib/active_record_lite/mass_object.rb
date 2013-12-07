@@ -1,9 +1,14 @@
 class MassObject
   # takes a list of attributes.
-  # creates getters and setters.
   # adds attributes to whitelist.
   def self.my_attr_accessible(*attributes)
   end
+
+  # takes a list of attributes.
+  # makes getters and setters
+  def self.my_attr_accessor(*attributes)
+  end
+
 
   # returns list of attributes that have been whitelisted.
   def self.attributes
