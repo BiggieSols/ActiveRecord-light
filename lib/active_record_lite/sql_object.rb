@@ -7,6 +7,7 @@ require_relative './searchable'
 
 
 class SQLObject < MassObject
+  extend Searchable
   # sets the table_name
   def self.set_table_name(table_name)
     @table_name = table_name
@@ -49,8 +50,7 @@ class SQLObject < MassObject
   # use send and map to get instance values.
   # after, update the id attribute with the helper method from db_connection
   def create
-    instance_vars = self.class.attributes
-    instance_var_vals = instance_vars.map { |var| self.send(var) }
+    instance_vars, instance_var_vals = attribute_values
 
     DBConnection.execute(<<-SQL)
     INSERT INTO
@@ -65,8 +65,7 @@ class SQLObject < MassObject
   # executes query that updates the row in the db corresponding to this instance
   # of the class. use "#{attr_name} = ?" and join with ', ' for set string.
   def update
-    instance_vars = self.class.attributes
-    instance_var_vals = instance_vars.map { |var| self.send(var) }
+    instance_vars, instance_var_vals = attribute_values
 
     set_line = instance_vars.map { |val| "#{val} = ?"}
 
@@ -93,5 +92,8 @@ class SQLObject < MassObject
 
   # helper method to return values of the attributes.
   def attribute_values
+    instance_vars = self.class.attributes
+    instance_var_vals = instance_vars.map { |var| self.send(var) }
+    [instance_vars, instance_var_vals]
   end
 end

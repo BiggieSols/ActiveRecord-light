@@ -3,7 +3,7 @@ require 'active_record_lite'
 describe "searchable" do
   before(:all) do
     cats_db_file_name =
-      File.expand_path(File.join(File.dirname(__FILE__), "../test/cats.db"))
+      File.expand_path(File.join(File.dirname(__FILE__), "../spec/cats.db"))
     DBConnection.open(cats_db_file_name)
 
     class Cat < SQLObject
