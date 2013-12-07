@@ -11,7 +11,14 @@ class AssocParams
 end
 
 class BelongsToAssocParams < AssocParams
-  def initialize(name, params)
+  def initialize(name, params = {})
+    params = {
+      class_name: self.to_s,
+      id: :id,
+      foreign_key: "#{self.to_s.downcase}_id"
+    }.merge(params)
+
+    params.each { |k,v| instance_variable_set("@#{k}", v) }
   end
 
   def type

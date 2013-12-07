@@ -8,6 +8,8 @@ require_relative './searchable'
 
 class SQLObject < MassObject
   extend Searchable
+  extend Associatable
+
   # sets the table_name
   def self.set_table_name(table_name)
     @table_name = table_name
