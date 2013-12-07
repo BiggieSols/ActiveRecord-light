@@ -55,7 +55,7 @@ describe SQLObject do
   it "#update"
   it "#save"
 
-  it "#saves saves changes to an object" do
+  it "#save saves changes to an object" do
     h = TestHuman.find(1)
     n = h.fname
     h.fname = SecureRandom.urlsafe_base64(16)

@@ -5,6 +5,7 @@ class MassObject
     @attributes ||= []
 
     @attributes += attributes
+    attr_accessor(*@attributes)
   end
 
   # takes a list of attributes.
@@ -38,9 +39,6 @@ class MassObject
   def self.parse_all(results)
     results.map { |result| self.new(result) }
   end
-
-  my_attr_accessible :name
-  my_attr_accessor :name
 
   # takes a hash of { attr_name => attr_val }.
   # checks the whitelist.
