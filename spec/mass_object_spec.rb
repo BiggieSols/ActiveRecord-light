@@ -74,6 +74,15 @@ describe MassObject do
   end
 
   describe "#initialize" do
+    subject(:obj) { MyMassObject.new(:x => :x_val, :y => :y_val)  }
+
+    before(:each) do
+      class MyMassObject < MassObject
+        my_attr_accessor(:x, :y)
+        my_attr_accessible(:x, :y)
+      end
+    end
+
     it "accept a hash of attribute names and values, assigning the values to instance variables" do
       obj.x.should == :x_val
       obj.y.should == :y_val
