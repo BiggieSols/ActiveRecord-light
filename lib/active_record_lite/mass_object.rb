@@ -36,6 +36,7 @@ class MassObject
   # takes an array of hashes.
   # returns array of objects.
   def self.parse_all(results)
+    results.map { |result| self.new(result) }
   end
 
   my_attr_accessible :name
@@ -49,7 +50,7 @@ class MassObject
     params.each do |attr_name, attr_val|
       # puts "attr_name: #{attr_name}, val: #{attr_val}"
       # p self.class.attributes
-      if self.class.attributes.include?(attr_name)
+      if self.class.attributes.include?(attr_name.to_sym)
         self.send("#{attr_name}=", attr_val)
       else
         raise "mass assignment to unregistered attribute #{attr_name}"
@@ -57,7 +58,6 @@ class MassObject
     end
   end
 end
-
 
 # MassObject.attributes
 # MassObject.methods  - MassObject.class.methods
