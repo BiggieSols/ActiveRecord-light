@@ -51,10 +51,6 @@ describe SQLObject do
     end
   end
 
-  it "#create"
-  it "#update"
-  it "#save"
-
   it "#save saves changes to an object" do
     h = TestHuman.find(1)
     n = h.fname

@@ -68,14 +68,11 @@ class SQLObject < MassObject
     instance_vars = self.class.attributes
     instance_var_vals = instance_vars.map { |var| self.send(var) }
 
-    set_line = []
-    instance_vars.each_index do |i|
-      set_line << "#{instance_vars[i]} = #{instance_var_vals[i]}"
-    end
+    set_line = instance_vars.map { |val| "#{val} = ?"}
 
     p set_line.join(", ")
 
-    DBConnection.execute(<<-SQL, self.id)
+    DBConnection.execute(<<-SQL, instance_var_vals, self.id)
     UPDATE
       #{self.class.table_name}
     SET
@@ -98,7 +95,3 @@ class SQLObject < MassObject
   def attribute_values
   end
 end
-
-# SQLObject.set_table_name("cats")
-# p SQLObject.table_name
-# SQLObject.all
