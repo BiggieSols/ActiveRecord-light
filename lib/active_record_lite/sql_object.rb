@@ -3,19 +3,30 @@ require_relative './db_connection' # use DBConnection.execute freely here.
 require_relative './mass_object'
 require_relative './searchable'
 
+
 class SQLObject < MassObject
   # sets the table_name
   def self.set_table_name(table_name)
+    @table_name = table_name.underscore
   end
 
   # gets the table_name
   def self.table_name
+    @table_name
   end
 
   # querys database for all records for this type. (result is array of hashes)
   # converts resulting array of hashes to an array of objects by calling ::new
   # for each row in the result. (might want to call #to_sym on keys)
   def self.all
+    DBConnection.open('./cats.rb')
+    result = DBConnection.execute(<<-SQL)
+      SELECT
+        *
+      FROM
+        #{table_name}
+    SQL
+    p result
   end
 
   # querys database for record of this type with id passed.
@@ -42,3 +53,7 @@ class SQLObject < MassObject
   def attribute_values
   end
 end
+
+SQLObject.set_table_name("cats")
+p SQLObject.table_name
+SQLObject.all

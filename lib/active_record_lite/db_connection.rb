@@ -17,6 +17,7 @@ class DBConnection
   end
 
   private
+
   def initialize(db_file_name)
   end
 end
