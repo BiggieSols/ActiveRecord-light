@@ -3,6 +3,8 @@ require 'active_record_lite'
 # Use these if you like.
 describe MassObject do
   describe "::my_attr_accessor" do
+    subject(:obj) { MyMassObject.new }
+
     before(:each) do
       class MyMassObject < MassObject
         my_attr_accessor(:x, :y)
@@ -20,6 +22,8 @@ describe MassObject do
       class AnotherObject < MassObject
         my_attr_accessor :a
       end
+
+      obj2 = AnotherObject.new
 
       obj2.methods.should_not include(:x)
       obj2.methods.should include(:a)
@@ -48,6 +52,16 @@ describe MassObject do
       expect do
         MyMassObject.new({ :x => "a", :y => "b" })
       end.to_not raise_error
+    end
+
+    it "should update instance variable values" do
+      class AnotherMyMassObj < MassObject
+        my_attr_accessible(:x, :y)
+        my_attr_accessor(:x, :y)
+      end
+      obj = AnotherMyMassObj.new({ :x => "a", :y => "b" })
+      obj.x.should == "a"
+      obj.y.should == "b"
     end
   end
 
