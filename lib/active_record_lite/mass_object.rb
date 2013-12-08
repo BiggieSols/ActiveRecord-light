@@ -56,14 +56,3 @@ class MassObject
     end
   end
 end
-
-# MassObject.attributes
-# MassObject.methods  - MassObject.class.methods
-# m = MassObject.new(:name => "sol")
-#
-# p m.name
-# m.name = "bill"
-#
-# p m.name
-
-# Massobject.new

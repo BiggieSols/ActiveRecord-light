@@ -1,4 +1,3 @@
-require 'debugger'
 require 'active_support/core_ext/object/try'
 require 'active_support/inflector'
 require_relative './db_connection.rb'
@@ -60,7 +59,6 @@ module Associatable
         WHERE
           #{asn_params.other_table}.#{asn_params.primary_key} = ?
       SQL
-      # debugger
       asn_params.other_class.parse_all(results).first
     end
   end
